@@ -3,12 +3,13 @@
         "name": "Diun-webhook通知",
         "description": "接收Diun-webhook通知并推送",
         "labels": "webhook",
-        "version": "0.0.1",
+        "version": "0.0.2",
         "icon": "Ward_A.png",
         "author": "saitenasuk",
         "level": 1,
         "history": {
-            "v0.0.1": "接收Diun-webhook通知并推送"
+            "v0.0.1": "接收Diun-webhook通知并推送",
+            "v0.0.2": "fix"
         }
     }
 }

@@ -13,7 +13,7 @@ class DiunHook(_PluginBase):
     # 插件图标
     plugin_icon = "Ward_A.png"
     # 插件版本
-    plugin_version = "0.0.1"
+    plugin_version = "0.0.2"
     # 插件作者
     plugin_author = "saitenasuk"
     # 作者主页
@@ -28,12 +28,10 @@ class DiunHook(_PluginBase):
     # 私有属性
     _enabled = False
     _notify = False
-    _msgtypes = []
 
     def init_plugin(self, config: dict = None):
         if config:
             self._enabled = config.get("enabled")
-            self._msgtypes = config.get("msgtypes") or []
             self._notify = config.get("notify")
 
     def send_notify(self, content: dict):
@@ -42,16 +40,10 @@ class DiunHook(_PluginBase):
         """
         logger.info(f"收到webhook消息啦。。。  {content}")
         if self._enabled and self._notify:
-            mtype = NotificationType.Manual
-            if self._msgtypes:
-                mtype = (
-                    NotificationType.__getitem__(str(self._msgtypes))
-                    or NotificationType.Manual
-                )
             if content:
                 self.post_message(
                     title="Diun通知",
-                    mtype=mtype,
+                    mtype=NotificationType.SiteMessage,
                     text="收到Diun-webhook消息",
                 )
 
@@ -126,13 +118,11 @@ class DiunHook(_PluginBase):
                                 "props": {"cols": 12, "md": 12},
                                 "content": [
                                     {
-                                        "component": "VSelect",
+                                        "component": "VAlert",
                                         "props": {
-                                            "multiple": True,
-                                            "chips": True,
-                                            "model": "msgtypes",
-                                            "label": "消息类型",
-                                            "items": MsgTypeOptions,
+                                            "type": "info",
+                                            "variant": "tonal",
+                                            "text": "接收消息地址：http://ip:port/api/v1/plugin/DiunHook/webhook",
                                         },
                                     }
                                 ],
@@ -143,8 +133,7 @@ class DiunHook(_PluginBase):
             }
         ], {
             "enabled": False,
-            "msgtypes": [],
-            "apikey": "",
+            "notify": False,
         }
 
     def get_page(self) -> List[dict]:
