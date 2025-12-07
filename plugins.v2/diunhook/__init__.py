@@ -13,7 +13,7 @@ class DiunHook(_PluginBase):
     # 插件图标
     plugin_icon = "Ward_A.png"
     # 插件版本
-    plugin_version = "0.0.2"
+    plugin_version = "0.0.3"
     # 插件作者
     plugin_author = "saitenasuk"
     # 作者主页
@@ -42,9 +42,12 @@ class DiunHook(_PluginBase):
         if self._enabled and self._notify:
             if content:
                 self.post_message(
-                    title="Diun通知",
+                    title="Diun通知-镜像更新",
                     mtype=NotificationType.SiteMessage,
-                    text="收到Diun-webhook消息",
+                    text=f"容器：{content['metadata']['ctn_names']}\n"
+                    f"镜像：{content['image']}\n"
+                    f"仓库：{content['hub_link']}\n"
+                    f"发布时间：{content['created']}",
                 )
 
         return schemas.Response(success=True, message="发送成功")
